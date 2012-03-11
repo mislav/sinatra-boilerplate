@@ -4,20 +4,6 @@ require 'active_support/core_ext/numeric/time'
 require 'active_support/core_ext/integer/time'
 require 'active_support/core_ext/time/acts_like'
 
-# This Sinatra extension configures your app for serving Haml + HTML5,
-# Sass + Compass, and CoffeeScript with concatenation and compression.
-#
-# The only requirement is defining your JavaScript assets:
-#
-#   set :js_assets, %w[zepto.js underscore.js app.coffee]
-#
-# Regular .js files must be under "public/", and .coffee under "views/".
-#
-# Now use the `javascript_includes` helper to render SCRIPT tags.
-#
-# The provided middleware will serve individual .coffee and .s[ac]ss files.
-# In production mode all JavaScript assets will be served from "/all.js"
-# which is a special resource that concatenates and compresses all files.
 module SinatraBoilerplate
   # poor man's Sprockets
   class Middleware < Struct.new(:app, :settings)
