@@ -9,6 +9,8 @@ group :development do
   gem 'thin'
   gem 'ruby-debug', :platforms => :mri_18
   gem 'ruby-debug19', :require => 'ruby-debug', :platforms => :mri_19
+  gem 'foreman'
+  gem 'guard-livereload'
 end
 
 gem 'haml'
