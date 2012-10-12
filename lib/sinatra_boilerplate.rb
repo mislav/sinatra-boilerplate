@@ -125,15 +125,30 @@ module SinatraBoilerplate
     app.set :haml, format: :html5
 
     app.set :sass do
-      require 'compass'
-      Compass.configuration do |config|
-        config.project_path = app.settings.root
-        config.sass_dir = app.settings.views
-      end
-
       options = {style: app.settings.production? ? :compressed : :nested}
       options[:cache_location] = File.join(ENV['TMPDIR'], 'sass-cache') if ENV['TMPDIR']
-      Compass.sass_engine_options.merge options
+
+      begin
+        require 'compass'
+      rescue LoadError
+      else
+        Compass.configuration do |config|
+          config.project_path = app.settings.root
+          config.sass_dir = app.settings.views
+        end
+        options = Compass.sass_engine_options.merge options
+      end
+
+      options[:load_paths] ||= []
+
+      begin
+        require 'bourbon'
+      rescue LoadError
+      else
+        options[:load_paths] << Bourbon::Generator.new([]).send(:stylesheets_directory)
+      end
+
+      options
     end
 
     app.use Middleware, app.settings
